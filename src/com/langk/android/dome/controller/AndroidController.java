@@ -12,7 +12,7 @@ public class AndroidController extends AndroidBaseController {
 
 	
 	@RequestMapping(value="/*",method=RequestMethod.GET)
-	public @ResponseBody BaseReturnEntity<String> login(@RequestParam("jsonstr") String jsonstr) {
+	public @ResponseBody BaseReturnEntity<Object> baseDispatch(@RequestParam("jsonstr") String jsonstr) {
 		return getFailReturnEntity("002","未定义CommonName");
 	}
 

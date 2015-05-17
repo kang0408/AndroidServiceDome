@@ -1,5 +1,7 @@
 package com.langk.android.dome.controller;
 
+import javax.annotation.Resource;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,6 +22,10 @@ import com.langk.android.dome.entity.User;
 @Controller
 @RequestMapping("/Android/user")
 public class AndroidUserController extends AndroidBaseController {
+	
+	@Resource
+	private UserDAOImpl userDAOImpl;
+	
 
 	/**
 	 * 用户登录传递的Name参数名
@@ -46,7 +52,7 @@ public class AndroidUserController extends AndroidBaseController {
 		if (requestEntity.getF()==null||requestEntity.getF().size()==0) {
 			return getFailReturnEntity("参数不能为空");
 		}
-		String emailString,password = null;
+		String emailString = null,password = null;
 		for (int i = 0; i < requestEntity.getF().size(); i++) {
 			if (requestEntity.getF().get(i).getN().equals(EMAIL)) {
 				emailString = requestEntity.getF().get(i).getV();
@@ -57,11 +63,12 @@ public class AndroidUserController extends AndroidBaseController {
 				continue;
 			}
 		}
-		
-		User user = new User();
-		user.setAge(1);
-		user.setName("张帅");
-		return getSuccessReturnEntity(user);
+		User user = userDAOImpl.loginUser(emailString, password);
+		if (user!=null) {
+			return getSuccessReturnEntity(user);
+		}else{
+			return getFailReturnEntity("005", "用户名或密码错误");
+		}
 	}
 	
 	@RequestMapping(value="/register",method=RequestMethod.GET)
@@ -77,8 +84,11 @@ public class AndroidUserController extends AndroidBaseController {
 		User user = new User();
 		user.setAge(1);
 		user.setName("张帅");
+		user.setPassword("123456");
+		user.setSex("man");
+		user.setEmail("zhangshuai@126.com");
 		try {
-			new UserDAOImpl().saveUser(user);
+			userDAOImpl.saveUser(user);
 			return getSuccessReturnEntity("注册成功");
 		} catch (Exception e) {
 			e.printStackTrace();

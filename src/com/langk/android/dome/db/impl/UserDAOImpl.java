@@ -5,6 +5,8 @@ import javax.annotation.Resource;
 
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Service;
 
 import com.langk.android.dome.db.dao.UserDao;
 import com.langk.android.dome.entity.User;
@@ -15,16 +17,17 @@ import com.langk.android.dome.entity.User;
  * @author K
  *
  */
+@Service
 public class UserDAOImpl implements UserDao {
 	
-	
+	@Resource
 	private SessionFactory sessionFactory;
+	
 
 	public SessionFactory getSessionFactory() {
 		return sessionFactory;
 	}
 
-	@Resource 
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 	}
@@ -33,7 +36,7 @@ public class UserDAOImpl implements UserDao {
 	public User findUserByID(String id) {
 		// TODO Auto-generated method stub
 		String hql = "from User u where u.id=?";
-		Query query = sessionFactory.getCurrentSession().createQuery(hql);
+		Query query = sessionFactory.openSession().createQuery(hql);
 		query.setString(0, id);
 		return (User)query.uniqueResult();
 	}
@@ -41,16 +44,16 @@ public class UserDAOImpl implements UserDao {
 	@Override
 	public void saveUser(User user) {
 		// TODO Auto-generated method stub
-		sessionFactory.getCurrentSession().save(user);
+		sessionFactory.openSession().save(user);
 	}
 
 	@Override
 	public User loginUser(String email, String pass) {
 		// TODO Auto-generated method stub
-		String hql = "from User u where u.EMAIL=? and u.PASSWORD = ?";
-		Query query = sessionFactory.getCurrentSession().createQuery(hql);
+		String hql = "from User u where u.email=? and u.password = ?";
+		Query query = sessionFactory.openSession().createQuery(hql);
 		query.setString(0, email);
-		query.setString(0, pass);
+		query.setString(1, pass);
 		return (User)query.uniqueResult();
 	}
 

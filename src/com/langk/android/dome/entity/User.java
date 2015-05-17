@@ -14,14 +14,14 @@ import javax.persistence.Table;
  *
  */
 @Entity
-@Table(name = "users", catalog = "dome")
+@Table(name = "user", catalog = "dome")
 public class User {
 
 	public User() {
 		// TODO Auto-generated constructor stub
 	}
 
-	private String ID;
+	private String id;
 
 	private String email;
 
@@ -36,12 +36,12 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ID")
-	public String getID() {
-		return ID;
+	public String getId() {
+		return id;
 	}
 
-	public void setID(String iD) {
-		ID = iD;
+	public void setId(String iD) {
+		id = iD;
 	}
 
 	@Column(name = "NAME")

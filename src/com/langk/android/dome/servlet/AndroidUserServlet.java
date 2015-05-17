@@ -61,7 +61,7 @@ public class AndroidUserServlet extends BaseServlet {
 		
 		if (requestEntity.getC().equals(ConfigEntity.LOGINCOMMON)) {
 			User user = new User();
-			user.setID("1");
+			user.setId("1");
 			user.setName("json");
 			user.setPassword("password");
 			user.setSex("man");

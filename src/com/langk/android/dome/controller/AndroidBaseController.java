@@ -15,9 +15,9 @@ public class AndroidBaseController {
 	/**
 	 * 获取失败后的返回对象
 	 */
-	protected BaseReturnEntity<String> getFailReturnEntity(String C, String M) {
+	protected BaseReturnEntity<Object> getFailReturnEntity(String C, String M) {
 		// TODO Auto-generated method stub
-		BaseReturnEntity<String> entity = new BaseReturnEntity<String>();
+		BaseReturnEntity<Object> entity = new BaseReturnEntity<Object>();
 		entity.setS(false);
 		entity.setC(C);
 		entity.setM(M);
